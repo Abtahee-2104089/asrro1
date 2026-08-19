@@ -1,0 +1,14 @@
+.agents/
+.claude/
+.next/
+convex/_generated/
+convex/_generated/ai/
+convex/**/_generated/
+components/motion/
+lib/ease.ts
+node_modules/
+AGENTS.md
+CLAUDE.md
+convex/README.md
+docs/SRS.docx
+public/
