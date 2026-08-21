@@ -21,7 +21,10 @@ export type PortalPermission = (typeof PORTAL_PERMISSIONS)[number]
 
 const POSITION_PERMISSIONS: Record<string, readonly PortalPermission[]> = {
   president: PORTAL_PERMISSIONS,
-  vice_president: PORTAL_PERMISSIONS,
+  "vice_president_(admin)": PORTAL_PERMISSIONS,
+  "vice_president_(logistics)": PORTAL_PERMISSIONS,
+  "vice_president_(technical)": PORTAL_PERMISSIONS,
+  "vice_president_(r&d)": PORTAL_PERMISSIONS,
   general_secretary: [
     "membership_manage",
     "events_manage",
@@ -49,7 +52,15 @@ const POSITION_PERMISSIONS: Record<string, readonly PortalPermission[]> = {
     "finance_manage",
     "finance_summary",
   ],
-  financial_secretary: ["reports_view", "finance_manage", "finance_summary"],
+  joint_organizing_secretary: [
+    "membership_manage",
+    "events_manage",
+    "committee_manage",
+    "notifications_send",
+    "finance_manage",
+    "finance_summary",
+  ],
+  finance_secretary: ["reports_view", "finance_manage", "finance_summary"],
   public_relations_secretary: [
     "content_manage",
     "files_manage",

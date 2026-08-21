@@ -28,10 +28,10 @@ export const systemRole = v.union(
 
 export const executivePosition = v.union(
   v.literal("president"),
-  v.literal("vice_president (admin)"),
-  v.literal("vice_president (logistics)"),
-  v.literal("vice_president (technical)"),
-  v.literal("vice_president (r&d)"),
+  v.literal("vice_president_(admin)"),
+  v.literal("vice_president_(logistics)"),
+  v.literal("vice_president_(technical)"),
+  v.literal("vice_president_(r&d)"),
   v.literal("general_secretary"),
   v.literal("joint_general_secretary"),
   v.literal("organizing_secretary"),

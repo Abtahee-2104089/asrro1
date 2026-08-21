@@ -44,10 +44,10 @@ export function ExecutiveAccountForm() {
         hscBatch: String(data.get("hscBatch")),
         executivePosition: String(data.get("executivePosition")) as
           | "president"
-          | "vice_president (admin)"
-          | "vice_president (logistics)"
-          | "vice_president (technical)"
-          | "vice_president (r&d)"
+          | "vice_president_(admin)"
+          | "vice_president_(logistics)"
+          | "vice_president_(technical)"
+          | "vice_president_(r&d)"
           | "general_secretary"
           | "joint_general_secretary"
           | "organizing_secretary"
