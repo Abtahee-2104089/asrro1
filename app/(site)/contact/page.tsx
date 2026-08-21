@@ -33,7 +33,7 @@ export default async function ContactPage() {
   const settings = await fetchQuery(api.content.publicSettings)
   const value = (key: string, fallback: string) =>
     settings.find((item) => item.key === key)?.value || fallback
-  const email = value("contact.email", "hello@asrro.org")
+  const email = value("contact.email", "asrro@cuet.ac.bd")
   const phone = value("contact.phone", "+880 1700 000 000")
   const address = value("contact.address", "Student Activity Centre, CUET")
   const latitude = value("contact.latitude", "23.4607")
