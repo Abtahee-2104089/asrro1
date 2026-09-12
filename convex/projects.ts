@@ -150,6 +150,27 @@ export const listAdmin = query({
   },
 })
 
+export const getAdminById = query({
+  args: { projectId: v.id("projects") },
+  returns: v.union(
+    v.object({ project: projectDoc, team: v.array(teamDoc) }),
+    v.null()
+  ),
+  handler: async (ctx, args) => {
+    await requireExecutive(ctx)
+    const project = await ctx.db.get("projects", args.projectId)
+    if (!project) return null
+    const team = await ctx.db
+      .query("projectMembers")
+      .withIndex("by_projectId_and_displayOrder", (q) =>
+        q.eq("projectId", project._id)
+      )
+      .order("asc")
+      .take(100)
+    return { project, team }
+  },
+})
+
 export const upsert = mutation({
   args: {
     projectId: v.optional(v.id("projects")),
@@ -298,5 +319,74 @@ export const upsertTeamMember = mutation({
       `Updated ${value.name}`
     )
     return id
+  },
+})
+
+export const removeTeamMember = mutation({
+  args: { projectMemberId: v.id("projectMembers") },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const actor = await requireExecutive(ctx)
+    const existing = await ctx.db.get("projectMembers", args.projectMemberId)
+    if (!existing) throw new ConvexError("Project team member not found")
+    await ctx.db.delete("projectMembers", existing._id)
+    await writeAudit(
+      ctx,
+      actor,
+      "project.team_remove",
+      "projectMember",
+      existing._id,
+      `Removed ${existing.name}`
+    )
+    return null
+  },
+})
+
+export const replaceTeam = mutation({
+  args: {
+    projectId: v.id("projects"),
+    members: v.array(
+      v.object({
+        name: v.string(),
+        role: v.string(),
+        displayOrder: v.number(),
+        memberId: v.optional(v.id("members")),
+      })
+    ),
+  },
+  returns: v.array(v.id("projectMembers")),
+  handler: async (ctx, args) => {
+    const actor = await requireExecutive(ctx)
+    if (!(await ctx.db.get("projects", args.projectId)))
+      throw new ConvexError("Project not found")
+    if (args.members.length > 50)
+      throw new ConvexError("Team is limited to 50 researchers")
+    const existing = await ctx.db
+      .query("projectMembers")
+      .withIndex("by_projectId_and_displayOrder", (q) =>
+        q.eq("projectId", args.projectId)
+      )
+      .take(100)
+    for (const row of existing) await ctx.db.delete("projectMembers", row._id)
+    const ids: Array<string> = []
+    for (const entry of args.members) {
+      const id: string = await ctx.db.insert("projectMembers", {
+        projectId: args.projectId,
+        memberId: entry.memberId,
+        name: cleanText(entry.name, "Name", 120),
+        role: cleanText(entry.role, "Role", 120),
+        displayOrder: Math.max(0, Math.floor(entry.displayOrder)),
+      })
+      ids.push(id)
+    }
+    await writeAudit(
+      ctx,
+      actor,
+      "project.team_replace",
+      "project",
+      args.projectId,
+      `Replaced team with ${args.members.length} researchers`
+    )
+    return ids as unknown as never[]
   },
 })

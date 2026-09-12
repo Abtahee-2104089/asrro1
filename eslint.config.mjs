@@ -55,6 +55,12 @@ const eslintConfig = defineConfig([
     },
   },
   {
+    files: ["components/dashboard/project-manager.tsx"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
+  {
     files: ["convex/**/*.{ts,tsx}"],
     rules: {
       ...disabledUnicornRules,

@@ -25,7 +25,7 @@ export const positionOptions = [
   "graphics_design_secretary",
   "media_secretary",
   "outreach_sponsor_management_secretary",
-  "executive_member"
+  "executive_member",
 ] as const
 
 export type ExecutivePosition = (typeof positionOptions)[number]

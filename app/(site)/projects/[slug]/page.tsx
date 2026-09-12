@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Code2, FileText, Trophy } from "lucide-react"
 import { fetchQuery } from "convex/nextjs"
 import { api } from "@/convex/_generated/api"
+import { RichText } from "@/components/shared/rich-text"
 import { SignalVisual } from "@/components/shared/signal-visual"
 import { SiteButton } from "@/components/shared/site-button"
 import Image from "next/image"
@@ -71,11 +72,11 @@ export default async function ProjectPage({
               <h1 className="text-5xl leading-[.95] font-semibold tracking-[-.055em] sm:text-7xl">
                 {project.title}
               </h1>
-              <p className="mt-6 max-w-3xl text-xl leading-8 text-[#425a70] dark:text-[#b9c8d9]">
-                {project.summary}
-              </p>
+              <div className="mt-6 max-w-3xl text-xl leading-8 text-[#425a70] dark:text-[#b9c8d9]">
+                <RichText value={project.summary} />
+              </div>
             </div>
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-[#2359d4]/15 dark:border-white/10">
+            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-[#2359d4]/15 bg-[#f4f7fb] dark:border-white/10 dark:bg-[#06101f]">
               {coverUrl ? (
                 <Image
                   src={coverUrl}
@@ -83,7 +84,7 @@ export default async function ProjectPage({
                   fill
                   sizes="(min-width: 1024px) 45vw, 100vw"
                   unoptimized
-                  className="object-cover"
+                  className="object-contain p-6"
                 />
               ) : (
                 <SignalVisual
@@ -123,9 +124,9 @@ export default async function ProjectPage({
             <h2 className="mt-4 text-3xl font-semibold tracking-[-.04em]">
               What the team proved.
             </h2>
-            <p className="mt-5 text-xl leading-9 text-[#425a70] dark:text-[#b9c8d9]">
-              {project.description}
-            </p>
+            <div className="mt-5 text-xl leading-9 text-[#425a70] dark:text-[#b9c8d9]">
+              <RichText value={project.description} />
+            </div>
             <h3 className="mt-12 text-xl font-semibold">Technical approach</h3>
             <p className="mt-4 leading-8 text-[#425a70] dark:text-[#9fb1c5]">
               {project.awards ??

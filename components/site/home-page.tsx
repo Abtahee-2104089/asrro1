@@ -6,6 +6,7 @@ import { AnimatedNumber } from "@/components/motion/animated-number"
 import { TextReveal } from "@/components/motion/text-reveal"
 import { OrbitalHero } from "@/components/site/orbital-hero"
 import { HomeUpcomingEvents } from "@/components/site/home-upcoming-events"
+import { RichText } from "@/components/shared/rich-text"
 import { SectionHeading } from "@/components/shared/section-heading"
 import { SignalVisual } from "@/components/shared/signal-visual"
 import { SiteButton } from "@/components/shared/site-button"
@@ -168,7 +169,7 @@ export async function HomePage() {
                   href={`/projects/${project.slug}`}
                   className="group overflow-hidden rounded-xl border border-[#2359d4]/15 bg-white shadow-[0_16px_45px_rgba(25,55,90,.08)] transition hover:-translate-y-1 hover:border-[#00a6b2]/55 motion-reduce:transform-none dark:border-white/10 dark:bg-[#09182a] dark:shadow-none dark:hover:border-[#65f2f1]/45"
                 >
-                  <div className="relative aspect-[16/10] border-b border-[#2359d4]/15 dark:border-white/10">
+                  <div className="relative aspect-[16/10] border-b border-[#2359d4]/15 bg-[#f4f7fb] dark:border-white/10 dark:bg-[#06101f]">
                     {projectCovers[index] ? (
                       <Image
                         src={projectCovers[index]}
@@ -176,7 +177,7 @@ export async function HomePage() {
                         fill
                         sizes="(min-width: 1024px) 33vw, 100vw"
                         unoptimized
-                        className="object-cover"
+                        className="object-contain p-4"
                       />
                     ) : (
                       <SignalVisual
@@ -195,9 +196,9 @@ export async function HomePage() {
                     <h3 className="text-2xl font-semibold tracking-[-.035em] text-[#07111f] group-hover:text-[#007d89] dark:text-white dark:group-hover:text-[#65f2f1]">
                       {project.title}
                     </h3>
-                    <p className="mt-3 leading-7 text-[#4b6175] dark:text-[#9fb1c5]">
-                      {project.summary}
-                    </p>
+                    <div className="mt-3 leading-7 text-[#4b6175] dark:text-[#9fb1c5]">
+                      <RichText value={project.summary} />
+                    </div>
                   </div>
                 </Link>
               ))}

@@ -131,7 +131,7 @@ function ProjectCover({
 }) {
   const url = useQuery(api.assets.getPublicUrl, assetId ? { assetId } : "skip")
   return (
-    <div className="relative aspect-[16/9] border-b border-[#2359d4]/15 dark:border-white/10">
+    <div className="relative aspect-[16/9] border-b border-[#2359d4]/15 bg-[#f4f7fb] dark:border-white/10 dark:bg-[#06101f]">
       {url ? (
         <Image
           src={url}
@@ -139,7 +139,7 @@ function ProjectCover({
           fill
           sizes="(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
           unoptimized
-          className="object-cover"
+          className="object-contain p-4"
         />
       ) : (
         <SignalVisual code={code} className="absolute inset-0" compact />

@@ -218,7 +218,7 @@ describe("membership lifecycle", () => {
         institute: "CUET",
         status: "active",
         systemRole: "executive",
-        executivePosition: "membership_coordinator",
+        executivePosition: "executive_member",
         permissions: ["membership_manage"],
         joinedAt: now,
         updatedAt: now,

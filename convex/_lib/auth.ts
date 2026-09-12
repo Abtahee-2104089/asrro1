@@ -61,7 +61,11 @@ const POSITION_PERMISSIONS: Record<string, readonly PortalPermission[]> = {
     "finance_summary",
   ],
   finance_secretary: ["reports_view", "finance_manage", "finance_summary"],
-  joint_finance_secretary: ["reports_view", "finance_manage", "finance_summary"],
+  joint_finance_secretary: [
+    "reports_view",
+    "finance_manage",
+    "finance_summary",
+  ],
   robotics_secretary: [],
   space_astronomy_secretary: [],
   research_publication_secretary: [],
